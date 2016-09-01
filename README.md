@@ -7,7 +7,7 @@ Why ?
 ------
 
 I have hit upon too many cases where the Hackage docs were not
-generated. So, this is my initial one hour solution to it.
+generated. So, this is my one hour solution to it.
 
 Limitations/TODO
 -------------------
