@@ -14,7 +14,7 @@ Limitations/TODO
 
 * Right now, for an Hackage API module it redirects to the Stackage
   API module for LTS 6.14. It doesn't go to the exact version as
-  requested by you. It will instead always go to the lst version of
+  requested by you. It will instead always go to the lts version of
   that package.
 * For those package which are not yet in Stackage, it will redirect to
   a invalid page.
