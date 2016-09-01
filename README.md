@@ -24,6 +24,6 @@ Limitations/TODO
   API module for LTS 6.14. It doesn't go to the exact version as
   requested by you. It will instead always go to the lts version of
   that package.
-* For those package which are not yet in Stackage, it will redirect to
-  a invalid page.
+* For those package which are not yet in Stackage, it will probably
+  redirect to a invalid page. (Haven't tested yet.)
 
