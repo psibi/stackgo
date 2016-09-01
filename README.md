@@ -3,6 +3,13 @@ stackgo
 
 A browser plugin to automatically redirect Haddock library pages to Stackage pages. 
 
+Install
+--------
+
+[Download Firefox](https://github.com/psibi/stackgo/blob/master/dist/stackgo-1.0-fx+an.xpi?raw=true)
+Google Chrome - Have published it in webstore. Will update the link once it gets activated.
+
+
 Why ?
 ------
 
