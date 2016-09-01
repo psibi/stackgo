@@ -1,0 +1,22 @@
+{
+
+    "manifest_version": 2,
+    "name": "Stackgo",
+    "version": "1.0",
+
+    "description": "Redirects hackage package page to the latest version of Stackage page",
+    
+    "icons": {
+        "48": "icons/stackage-48.png",
+        "96": "icons/stackage-96.png"
+    },
+    
+    "permissions": [
+        "webRequest", "webRequestBlocking"
+    ],
+
+    "background": {
+        "scripts": ["stackage.js"]
+    }
+
+}
