@@ -23,7 +23,7 @@ function extractPackageName(name) {
 }
 
 function redirect(requestDetails) {
-    console.log("Redirecting: " + requestDetails.url);
+    // console.log("Redirecting: " + requestDetails.url);
     var originalUrl = requestDetails.url;
     var parts = originalUrl.split('package');
     var packagePath = parts[1];
@@ -58,7 +58,7 @@ function redirect(requestDetails) {
         }
     }
 
-    console.log(requestDetails);
+    // console.log(requestDetails);
     // if (redirectUrl === null)
     //     redirectUrl = requestDetails.url;
     return {
