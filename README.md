@@ -7,6 +7,7 @@ Install
 --------
 
 [Download Firefox](https://github.com/psibi/stackgo/blob/master/dist/stackgo-1.0-fx+an.xpi?raw=true)
+
 [Download Chrome](https://chrome.google.com/webstore/detail/ojjalokgookadeklnffglgbnlbaiackn)
 
 Why ?
