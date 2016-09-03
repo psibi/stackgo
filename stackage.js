@@ -12,6 +12,8 @@ function extractPackageName(name) {
     // name: Package name with version
     // >> extractPackageName("yesod-core-2.3.3.4")
     // >> "yesod-core"
+    // >> extractPackageName("yesod-core-hask")
+    // >> "yesod-core-hask"
     var parts = name.split("-");
     var possibleVersionNumber = parts[parts.length - 1];
     if (isNaN(parseFloat(possibleVersionNumber))) {
@@ -23,7 +25,6 @@ function extractPackageName(name) {
 }
 
 function redirect(requestDetails) {
-    // console.log("Redirecting: " + requestDetails.url);
     var originalUrl = requestDetails.url;
     var parts = originalUrl.split('package');
     var packagePath = parts[1];
