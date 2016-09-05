@@ -8,13 +8,19 @@
     
     "icons": {
         "48": "icons/stackage-48.png",
-        "96": "icons/stackage-96.png"
+        "96": "icons/stackage-96.png",
+        "128": "icons/stackage-128.png"
     },
-    
-    "permissions": [
-        "webRequest", "webRequestBlocking"
-    ],
 
+    "permissions": [
+        "webRequest", 
+        "*://hackage.haskell.org/package/*",
+        "*://*.stackage.org/haddock/lts*",
+        "*://*.stackage.org/package/*",
+        "webRequestBlocking",
+        "tabs"
+    ],
+    
     "background": {
         "scripts": ["stackage.js"]
     }
