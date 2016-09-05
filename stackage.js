@@ -1,8 +1,12 @@
 var pattern = "*://hackage.haskell.org/package/*";
+var stackagePattern = "*://*.stackage.org/haddock/lts*";
+var stackagePackagePattern = "*://*.stackage.org/package/*";
 
 var ltsVersion = "lts-6.14";
 var stackageUrl = "https://www.stackage.org/package/";
 var haddockUrl = "https://www.stackage.org/haddock/" + ltsVersion + "/";
+
+var originUrls = [];
 
 function isInArray(value, array) {
   return array.indexOf(value) > -1;
@@ -24,7 +28,9 @@ function extractPackageName(name) {
     }
 }
 
+
 function redirect(requestDetails) {
+    consoe.log('rque', requestDetails);
     var originalUrl = requestDetails.url;
     var parts = originalUrl.split('package');
     var packagePath = parts[1];
@@ -59,16 +65,44 @@ function redirect(requestDetails) {
         }
     }
 
-    // console.log(requestDetails);
-    // if (redirectUrl === null)
-    //     redirectUrl = requestDetails.url;
-    return {
-        redirectUrl: redirectUrl
-    };
+    if (requestDetails.originUrl === undefined) {
+        // chrome doesn't yet support originUrl
+    } else {
+        if (requestDetails.originUrl.startsWith("http://www.stackage") ||
+            requestDetails.originUrl.startsWith("https://www.stackage") ||
+            requestDetails.originUrl.startsWith("http://www.hackage") ||
+            requestDetails.originUrl.startsWith("https://www.hackage"))
+            return true;
+    }
+    
+    if (originUrls[requestDetails.originUrl] === undefined) {
+        return {
+            redirectUrl: redirectUrl
+        };
+    }
 }
+
 
 chrome.webRequest.onBeforeRequest.addListener(
     redirect,
     {urls:[pattern], types:["main_frame"]},
     ["blocking"]
+);
+
+function checkStatusAndRedirect(requestDetails) {
+    if (requestDetails.statusCode === 500) {
+        // Redirect to the original hackage url
+        originUrls[requestDetails.originUrl] = true;
+        return {
+            redirectUrl: requestDetails.originUrl
+        };
+    } else {
+        return 0;
+    }
+}
+
+chrome.webRequest.onHeadersReceived.addListener(
+    checkStatusAndRedirect, 
+    {urls:[stackagePattern, stackagePackagePattern], types:["main_frame"]},
+    ["blocking", "responseHeaders"]
 );
