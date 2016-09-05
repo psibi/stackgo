@@ -6,7 +6,33 @@ var ltsVersion = "lts-6.14";
 var stackageUrl = "https://www.stackage.org/package/";
 var haddockUrl = "https://www.stackage.org/haddock/" + ltsVersion + "/";
 
-var originUrls = [];
+// Variable tracking if the iniial originUrl is visited
+var originUrls = {}; 
+
+// Object tracking redirect to origin urls. Note that this is from
+// Stackage to the original urls.
+var stackageMappingUrls = {}; 
+
+var tabs = {};
+
+// Get all existing tabs
+chrome.tabs.query({}, function(results) {
+    results.forEach(function(tab) {
+        tabs[tab.id] = tab;
+    });
+});
+
+// Create tab event listeners
+function onUpdatedListener(tabId, changeInfo, tab) {
+    tabs[tab.id] = tab;
+}
+function onRemovedListener(tabId) {
+    delete tabs[tabId];
+}
+
+// Subscribe to tab events
+chrome.tabs.onUpdated.addListener(onUpdatedListener);
+chrome.tabs.onRemoved.addListener(onRemovedListener);
 
 function isInArray(value, array) {
   return array.indexOf(value) > -1;
@@ -30,7 +56,7 @@ function extractPackageName(name) {
 
 
 function redirect(requestDetails) {
-    consoe.log('rque', requestDetails);
+
     var originalUrl = requestDetails.url;
     var parts = originalUrl.split('package');
     var packagePath = parts[1];
@@ -64,18 +90,36 @@ function redirect(requestDetails) {
             redirectUrl = requestDetails.url;
         }
     }
+    stackageMappingUrls[redirectUrl] = requestDetails.url;
+    // if (requestDetails.originUrl === undefined) {
+    //     // chrome doesn't yet support originUrl
+    // } else {
+    //     if (requestDetails.originUrl.startsWith("http://www.stackage") ||
+    //         requestDetails.originUrl.startsWith("https://www.stackage") ||
+    //         requestDetails.originUrl.startsWith("http://www.hackage") ||
+    //         requestDetails.originUrl.startsWith("https://www.hackage"))
+    //         return true;
+    // }
+    // var currentUrl = tab.url;
+    // console.log('fakjf', tab.url);
+    // if (currentUrl.startsWith("http://www.stackage.org/") ||
+    //     currentUrl.startsWith("https://www.stackage.org"))
+    //     return true;
 
-    if (requestDetails.originUrl === undefined) {
-        // chrome doesn't yet support originUrl
-    } else {
-        if (requestDetails.originUrl.startsWith("http://www.stackage") ||
-            requestDetails.originUrl.startsWith("https://www.stackage") ||
-            requestDetails.originUrl.startsWith("http://www.hackage") ||
-            requestDetails.originUrl.startsWith("https://www.hackage"))
-            return true;
-    }
+    var currentTabId = parseInt(requestDetails.tabId);
+    var currentUrl = tabs[currentTabId].url;
+    console.log('vaurl', currentUrl);
     
-    if (originUrls[requestDetails.originUrl] === undefined) {
+    if (currentUrl.startsWith("http://www.stackage.org/") ||
+        currentUrl.startsWith("https://www.stackage.org") ||
+        currentUrl.startsWith("http://hackage.haskell.org/package") ||
+        currentUrl.startsWith("https://hackage.haskell.org/package")
+       )
+        return true;
+    
+    // console.log('mid');
+    if (originUrls[requestDetails.url] === undefined) {
+        // requestDetails.url is a hackage url
         return {
             redirectUrl: redirectUrl
         };
@@ -90,16 +134,18 @@ chrome.webRequest.onBeforeRequest.addListener(
 );
 
 function checkStatusAndRedirect(requestDetails) {
-    if (requestDetails.statusCode === 500) {
+    console.log('reqeus', requestDetails);
+    if (requestDetails.statusCode === 500 || requestDetails.statusCode === 404) {
         // Redirect to the original hackage url
-        originUrls[requestDetails.originUrl] = true;
+        // Note that requestDetails.url is the stackage url
+        originUrls[stackageMappingUrls[requestDetails.url]] = true;
         return {
-            redirectUrl: requestDetails.originUrl
+            redirectUrl: stackageMappingUrls[requestDetails.url]
         };
-    } else {
-        return 0;
     }
 }
+                   
+
 
 chrome.webRequest.onHeadersReceived.addListener(
     checkStatusAndRedirect, 
