@@ -91,24 +91,9 @@ function redirect(requestDetails) {
         }
     }
     stackageMappingUrls[redirectUrl] = requestDetails.url;
-    // if (requestDetails.originUrl === undefined) {
-    //     // chrome doesn't yet support originUrl
-    // } else {
-    //     if (requestDetails.originUrl.startsWith("http://www.stackage") ||
-    //         requestDetails.originUrl.startsWith("https://www.stackage") ||
-    //         requestDetails.originUrl.startsWith("http://www.hackage") ||
-    //         requestDetails.originUrl.startsWith("https://www.hackage"))
-    //         return true;
-    // }
-    // var currentUrl = tab.url;
-    // console.log('fakjf', tab.url);
-    // if (currentUrl.startsWith("http://www.stackage.org/") ||
-    //     currentUrl.startsWith("https://www.stackage.org"))
-    //     return true;
-
     var currentTabId = parseInt(requestDetails.tabId);
     var currentUrl = tabs[currentTabId].url;
-    console.log('vaurl', currentUrl);
+    // console.log('vaurl', currentUrl);
     
     if (currentUrl.startsWith("http://www.stackage.org/") ||
         currentUrl.startsWith("https://www.stackage.org") ||
@@ -134,7 +119,7 @@ chrome.webRequest.onBeforeRequest.addListener(
 );
 
 function checkStatusAndRedirect(requestDetails) {
-    console.log('reqeus', requestDetails);
+    // console.log('reqeus', requestDetails);
     if (requestDetails.statusCode === 500 || requestDetails.statusCode === 404) {
         // Redirect to the original hackage url
         // Note that requestDetails.url is the stackage url
