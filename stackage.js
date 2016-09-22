@@ -2,7 +2,7 @@ var pattern = "*://hackage.haskell.org/package/*";
 var stackagePattern = "*://*.stackage.org/haddock/lts*";
 var stackagePackagePattern = "*://*.stackage.org/package/*";
 
-var ltsVersion = "lts-6.14";
+var ltsVersion = "lts-7.0";
 var stackageUrl = "https://www.stackage.org/package/";
 var haddockUrl = "https://www.stackage.org/haddock/" + ltsVersion + "/";
 
@@ -131,8 +131,8 @@ chrome.webRequest.onBeforeRequest.addListener(
 
 function versionLessStackageUrl(stackageUrl) {
     /*
-     >> versionLessStackageUrl("https://www.stackage.org/haddock/lts-6.14/yesod-core-1.4.23/Yesod-Handler.html")
-     https://www.stackage.org/haddock/lts-6.14/yesod-core/Yesod-Handler.html
+     >> versionLessStackageUrl("https://www.stackage.org/haddock/lts-7.0/yesod-core-1.4.23/Yesod-Handler.html")
+     https://www.stackage.org/haddock/lts-7.0/yesod-core/Yesod-Handler.html
      */
     var parts = stackageUrl.split(ltsVersion);
     var packagePath = parts[1];
