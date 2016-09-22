@@ -81,7 +81,11 @@ function redirect(requestDetails) {
         // package or some other package entirely like report in which
         // case it's better we redirct it to hackage itself.
         var isDocs = isInArray("docs", packageParts);
-        if (isDocs) {
+        var isSrc = isInArray("src", packageParts);
+        if (isDocs && isSrc) {
+            // it's a source code page
+            redirectUrl = null;
+        } else if (isDocs) {
             var modulePackageName = extractPackageName(packageParts[1]);
             var moduleName = packageParts[3];
             redirectUrl = haddockUrl + modulePackageName + "/" + moduleName;
@@ -90,6 +94,12 @@ function redirect(requestDetails) {
             redirectUrl = requestDetails.url;
         }
     }
+
+    if (redirectUrl === null) {
+        // Just go the original page
+        return true;        
+    }
+
     stackageMappingUrls[redirectUrl] = requestDetails.url;
     var currentTabId = parseInt(requestDetails.tabId);
     var currentUrl = tabs[currentTabId].url;
