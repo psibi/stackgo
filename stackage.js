@@ -54,7 +54,6 @@ function extractPackageName(name) {
     }
 }
 
-
 function redirect(requestDetails) {
 
     var originalUrl = requestDetails.url;
@@ -100,7 +99,6 @@ function redirect(requestDetails) {
         return true;        
     }
 
-    stackageMappingUrls[redirectUrl] = requestDetails.url;
     var currentTabId = parseInt(requestDetails.tabId);
     var currentUrl = tabs[currentTabId].url;
     // console.log('vaurl', currentUrl);
@@ -113,11 +111,14 @@ function redirect(requestDetails) {
         return true;
     
     // console.log('mid');
+    stackageMappingUrls[redirectUrl] = requestDetails.url;
     if (originUrls[requestDetails.url] === undefined) {
         // requestDetails.url is a hackage url
         return {
             redirectUrl: redirectUrl
         };
+    } else {
+        return true;
     }
 }
 
@@ -128,15 +129,32 @@ chrome.webRequest.onBeforeRequest.addListener(
     ["blocking"]
 );
 
+function versionLessStackageUrl(stackageUrl) {
+    /*
+     >> versionLessStackageUrl("https://www.stackage.org/haddock/lts-6.14/yesod-core-1.4.23/Yesod-Handler.html")
+     https://www.stackage.org/haddock/lts-6.14/yesod-core/Yesod-Handler.html
+     */
+    var parts = stackageUrl.split(ltsVersion);
+    var packagePath = parts[1];
+    var packageParts = packagePath.split('/');
+    var packageName = extractPackageName(packageParts[1]);
+    packageParts.splice(0,2);
+    return parts[0] + ltsVersion + "/" + packageName + "/" + packageParts.join('/');
+}
+
 function checkStatusAndRedirect(requestDetails) {
     // console.log('reqeus', requestDetails);
     if (requestDetails.statusCode === 500 || requestDetails.statusCode === 404) {
         // Redirect to the original hackage url
         // Note that requestDetails.url is the stackage url
-        originUrls[stackageMappingUrls[requestDetails.url]] = true;
-        return {
-            redirectUrl: stackageMappingUrls[requestDetails.url]
+        var refinedStackageUrl = versionLessStackageUrl(requestDetails.url);
+        originUrls[stackageMappingUrls[refinedStackageUrl]] = true;
+        var r = {
+            redirectUrl: stackageMappingUrls[refinedStackageUrl]
         };
+        // console.log('within', refinedStackageUrl, stackageMappingUrls, r);
+        return r;
+
     }
 }
                    
