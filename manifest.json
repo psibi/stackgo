@@ -2,7 +2,7 @@
 
     "manifest_version": 2,
     "name": "Stackgo",
-    "version": "1.1",
+    "version": "1.2",
 
     "description": "Redirects hackage package page to the latest version of Stackage page",
     
