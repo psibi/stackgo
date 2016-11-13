@@ -6,6 +6,8 @@ Stackage pages when went via search engines like Google/Bing
 etc. For cases, where the package hasn't been yet added to Stackage -
 it will redirect to the Haddock pages.
 
+![stackgo](https://cloud.githubusercontent.com/assets/737477/20246037/41ba2a00-a9d4-11e6-845e-e429d3eae6e7.gif)
+
 Install
 --------
 
