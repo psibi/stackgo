@@ -2,7 +2,7 @@ var pattern = "*://hackage.haskell.org/package/*";
 var stackagePattern = "*://*.stackage.org/haddock/lts*";
 var stackagePackagePattern = "*://*.stackage.org/package/*";
 
-var ltsVersion = "lts-7.0";
+var ltsVersion = "lts";
 var stackageUrl = "https://www.stackage.org/package/";
 var haddockUrl = "https://www.stackage.org/haddock/" + ltsVersion + "/";
 
