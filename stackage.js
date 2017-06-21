@@ -6,6 +6,35 @@ var ltsVersion = "lts";
 var stackageUrl = "https://www.stackage.org/package/";
 var haddockUrl = "https://www.stackage.org/haddock/" + ltsVersion + "/";
 
+function getLtsVersionFromSetting() {
+  var getting = browser.storage.local.get("stackageResolver");
+  return getting;
+}
+
+getLtsVersionFromSetting().then(function(version) {
+  ltsVersion = version.stackageResolver;
+  if (ltsVersion === undefined || ltsVersion === null)
+    ltsVersion = "lts";
+  haddockUrl = "https://www.stackage.org/haddock/" + ltsVersion + "/";
+  console.log('version', ltsVersion);
+});
+
+function modifyLtsVersion(value, area) {
+  if (area === "local") {
+    console.log('nope', value);
+    const { stackageResolver } = value;
+    if (stackageResolver === undefined || stackageResolver === null) {
+      ltsVersion = "lts";
+    }
+    ltsVersion = stackageResolver.newValue;
+    haddockUrl = "https://www.stackage.org/haddock/" + ltsVersion + "/";
+    console.log('version2', ltsVersion);
+  }
+  console.log('inside');
+}
+
+browser.storage.onChanged.addListener(modifyLtsVersion)
+
 // Variable tracking if the iniial originUrl is visited
 var originUrls = {}; 
 
@@ -129,7 +158,7 @@ chrome.webRequest.onBeforeRequest.addListener(
     ["blocking"]
 );
 
-function versionLessStackageUrl(stackageUrl) {
+function versionLessStackageUrl(stackageUrl, ltsVersion) {
     /*
      >> versionLessStackageUrl("https://www.stackage.org/haddock/lts-7.0/yesod-core-1.4.23/Yesod-Handler.html")
      https://www.stackage.org/haddock/lts-7.0/yesod-core/Yesod-Handler.html
@@ -147,7 +176,7 @@ function checkStatusAndRedirect(requestDetails) {
     if (requestDetails.statusCode === 500 || requestDetails.statusCode === 404) {
         // Redirect to the original hackage url
         // Note that requestDetails.url is the stackage url
-        var refinedStackageUrl = versionLessStackageUrl(requestDetails.url);
+        var refinedStackageUrl = versionLessStackageUrl(requestDetails.url, ltsVersion);
         originUrls[stackageMappingUrls[refinedStackageUrl]] = true;
         var r = {
             redirectUrl: stackageMappingUrls[refinedStackageUrl]
