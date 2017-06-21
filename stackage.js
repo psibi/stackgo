@@ -16,21 +16,17 @@ getLtsVersionFromSetting().then(function(version) {
   if (ltsVersion === undefined || ltsVersion === null)
     ltsVersion = "lts";
   haddockUrl = "https://www.stackage.org/haddock/" + ltsVersion + "/";
-  console.log('version', ltsVersion);
 });
 
 function modifyLtsVersion(value, area) {
   if (area === "local") {
-    console.log('nope', value);
     const { stackageResolver } = value;
     if (stackageResolver === undefined || stackageResolver === null) {
       ltsVersion = "lts";
     }
     ltsVersion = stackageResolver.newValue;
     haddockUrl = "https://www.stackage.org/haddock/" + ltsVersion + "/";
-    console.log('version2', ltsVersion);
   }
-  console.log('inside');
 }
 
 browser.storage.onChanged.addListener(modifyLtsVersion)
@@ -130,7 +126,6 @@ function redirect(requestDetails) {
 
     var currentTabId = parseInt(requestDetails.tabId);
     var currentUrl = tabs[currentTabId].url;
-    // console.log('vaurl', currentUrl);
     
     if (currentUrl.startsWith("http://www.stackage.org/") ||
         currentUrl.startsWith("https://www.stackage.org") ||
@@ -139,7 +134,6 @@ function redirect(requestDetails) {
        )
         return true;
     
-    // console.log('mid');
     stackageMappingUrls[redirectUrl] = requestDetails.url;
     if (originUrls[requestDetails.url] === undefined) {
         // requestDetails.url is a hackage url
@@ -172,7 +166,6 @@ function versionLessStackageUrl(stackageUrl, ltsVersion) {
 }
 
 function checkStatusAndRedirect(requestDetails) {
-    // console.log('reqeus', requestDetails);
     if (requestDetails.statusCode === 500 || requestDetails.statusCode === 404) {
         // Redirect to the original hackage url
         // Note that requestDetails.url is the stackage url
@@ -181,14 +174,10 @@ function checkStatusAndRedirect(requestDetails) {
         var r = {
             redirectUrl: stackageMappingUrls[refinedStackageUrl]
         };
-        // console.log('within', refinedStackageUrl, stackageMappingUrls, r);
         return r;
-
     }
 }
                    
-
-
 chrome.webRequest.onHeadersReceived.addListener(
     checkStatusAndRedirect, 
     {urls:[stackagePattern, stackagePackagePattern], types:["main_frame"]},
