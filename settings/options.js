@@ -8,11 +8,11 @@ function saveOptions(e) {
 function restoreOptions() {
 
   function setCurrentChoice(result) {
-    document.querySelector("#stackageResolver").value = result.stackageResolver || "blue";
+    document.querySelector("#stackageResolver").value = result.stackageResolver || "lts";
   }
 
   function onError(error) {
-    console.log(`Error: ${error}`);
+    console.log(`Error from Stackgo: ${error}`);
   }
 
   var getting = browser.storage.local.get("stackageResolver");
