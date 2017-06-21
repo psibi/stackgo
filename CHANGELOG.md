@@ -1,7 +1,13 @@
-# Version 1.3
+## Version 1.4
 
-* Stackage server now supports automatic redirection to the latest lts.
-  Stackgo now takes advantage of that to always point you to the latest docs.
+* Stackgo now support redirecting to a particular lts/snapshot
+  resolver. This can be configured in the Settings page of the addon.
+
+## Version 1.3
+
+* Stackage server now supports automatic redirection to the latest
+  lts.  Stackgo now takes advantage of that to always point you to the
+  latest docs.
 * A basic Screencast is added.
 
 ## Version 1.2
