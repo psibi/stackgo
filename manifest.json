@@ -18,8 +18,13 @@
         "*://*.stackage.org/haddock/lts*",
         "*://*.stackage.org/package/*",
         "webRequestBlocking",
-        "tabs"
+        "tabs",
+        "storage"
     ],
+    
+    "options_ui": {
+        "page": "settings/options.html"
+    },
     
     "background": {
         "scripts": ["stackage.js"]
