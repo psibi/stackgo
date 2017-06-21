@@ -2,10 +2,11 @@
 # Script for bundling a firefox and chrome zip plugin
 
 # Chrome bundling
-rm -rf ./chrome
-mkdir chrome
-cp manifest.json stackage.js ./chrome
-cp -r icons ./chrome
+# rm -rf ./chrome
+# mkdir chrome
+# cp manifest.json stackage.js ./chrome
+# cp -r icons ./chrome
+# cp -r settings ./firefox
 # cd chrome
 # zip -r ../chrome.zip *
 # cd ..
