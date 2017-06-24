@@ -1,3 +1,5 @@
 chrome
 *zip
 firefox
+node_modules
+dist/
