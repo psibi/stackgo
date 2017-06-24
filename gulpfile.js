@@ -1,6 +1,7 @@
 const gulp = require('gulp');
 const preprocess = require('gulp-preprocess');
 const gulpCopy = require('gulp-copy');
+const zip = require('gulp-zip');
 
 const sourceFiles = ['manifest.json', 'icons/*', 'settings/options.html']
 
@@ -28,4 +29,8 @@ gulp.task('firefox', function() {
   gulp.src(['./settings/options.js'])
       .pipe(preprocess({context: {BROWSER_ENV: 'FIREFOX'}}))
       .pipe(gulp.dest('./firefox/settings/'))
+  
+  gulp.src('firefox/*')
+      .pipe(zip('firefox.zip'))
+      .pipe(gulp.dest('dist'))
 });
