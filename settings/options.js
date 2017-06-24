@@ -1,6 +1,6 @@
 function saveOptions(e) {
   e.preventDefault();
-  browser.storage.local.set({
+  chrome.storage.local.set({
     stackageResolver: document.querySelector("#stackageResolver").value
   });
 }
