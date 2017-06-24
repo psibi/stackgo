@@ -1,6 +1,6 @@
 {
   "name": "stackgo",
-  "version": "1.4",
+  "version": "1.5",
   "description": "Browser plugin for Haskell development",
   "repository": "git@github.com:psibi/stackgo.git",
   "author": "Sibi Prabakaran <sibi@psibi.in>",
