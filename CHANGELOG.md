@@ -1,3 +1,7 @@
+## Version 1.5
+
+* Fix bug in the Chrome version which makes the extension unusable.
+
 ## Version 1.4
 
 * Stackgo now support redirecting to a particular lts/snapshot
