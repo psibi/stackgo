@@ -16,3 +16,16 @@ gulp.task('chrome', function() {
       .pipe(preprocess({context: {BROWSER_ENV: 'CHROME'}}))
       .pipe(gulp.dest('./chrome/settings/'))
 });
+
+gulp.task('firefox', function() {
+  gulp.src(sourceFiles)
+      .pipe(gulpCopy('./firefox/'))
+
+  gulp.src(['./stackage.js'])
+      .pipe(preprocess({context: {BROWSER_ENV: 'FIREFOX'}}))
+      .pipe(gulp.dest('./firefox/'))
+
+  gulp.src(['./settings/options.js'])
+      .pipe(preprocess({context: {BROWSER_ENV: 'FIREFOX'}}))
+      .pipe(gulp.dest('./firefox/settings/'))
+});
