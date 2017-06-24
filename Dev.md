@@ -29,4 +29,5 @@ yarn run firefox
 ## Deployment
 
 Firefox: https://addons.mozilla.org/en-US/developers/addon/stackgo/versions#version-upload
-Chorme: https://chrome.google.com/webstore/developer/dashboard
+
+Chrome: https://chrome.google.com/webstore/developer/dashboard
