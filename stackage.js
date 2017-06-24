@@ -6,6 +6,7 @@ var ltsVersion = "lts";
 var stackageUrl = "https://www.stackage.org/package/";
 var haddockUrl = "https://www.stackage.org/haddock/" + ltsVersion + "/";
 
+/* @if BROWSER_ENV='FIREFOX' */
 function getLtsVersionFromSetting() {
   var getting = browser.storage.local.get("stackageResolver");
   return getting;
@@ -30,6 +31,31 @@ function modifyLtsVersion(value, area) {
 }
 
 browser.storage.onChanged.addListener(modifyLtsVersion)
+/* @endif */
+
+/* @if BROWSER_ENV='CHROME' */
+function getLtsVersionFromSetting() {
+  chrome.storage.local.get("stackageResolver", function(version) {
+    ltsVersion = version.stackageResolver;
+    if (ltsVersion === undefined || ltsVersion === null)
+      ltsVersion = "lts";
+    haddockUrl = "https://www.stackage.org/haddock/" + ltsVersion + "/";
+  }
+}
+
+function modifyLtsVersion(value, area) {
+  if (area === "local") {
+    const { stackageResolver } = value;
+    if (stackageResolver === undefined || stackageResolver === null) {
+      ltsVersion = "lts";
+    }
+    ltsVersion = stackageResolver.newValue;
+    haddockUrl = "https://www.stackage.org/haddock/" + ltsVersion + "/";
+  }
+}
+
+browser.storage.onChanged.addListener(modifyLtsVersion)
+/* @endif */
 
 // Variable tracking if the iniial originUrl is visited
 var originUrls = {}; 
