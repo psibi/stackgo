@@ -2,15 +2,17 @@
   "name": "stackgo",
   "version": "1.4",
   "description": "Browser plugin for Haskell development",
-  "repository": "git@github.com:psibi/stackgo.git",
+  "repository": "git@github.com:psibi\/stackgo.git",
   "author": "Sibi Prabakaran <sibi@psibi.in>",
   "license": "GNU GPLv3",
   "scripts": {
-    "chrome": "gulp chrome"
+    "chrome": "gulp chrome",
+    "firefox": "gulp firefox"
   },
   "devDependencies": {
     "gulp": "^3.9.1",
     "gulp-copy": "^1.0.0",
-    "gulp-preprocess": "^2.0.0"
+    "gulp-preprocess": "^2.0.0",
+    "gulp-zip": "^4.0.0"
   }
 }
