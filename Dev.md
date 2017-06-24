@@ -12,6 +12,20 @@ Ref: https://developer.mozilla.org/en-US/Add-ons/Add-on_Debugger
   unpacked extension - Point to the chrome directory and test the new
   plugin.
 
+## Development
+
+To make a chrome build:
+
+``` shellsession
+yarn run chrome
+```
+
+To make a firefox build
+
+``` shellsession
+yarn run firefox
+```
+
 ## Deployment
 
 Firefox: https://addons.mozilla.org/en-US/developers/addon/stackgo/versions#version-upload
