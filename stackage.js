@@ -40,7 +40,7 @@ function getLtsVersionFromSetting() {
     if (ltsVersion === undefined || ltsVersion === null)
       ltsVersion = "lts";
     haddockUrl = "https://www.stackage.org/haddock/" + ltsVersion + "/";
-  }
+  });
 }
 
 function modifyLtsVersion(value, area) {
@@ -54,7 +54,7 @@ function modifyLtsVersion(value, area) {
   }
 }
 
-browser.storage.onChanged.addListener(modifyLtsVersion)
+chrome.storage.onChanged.addListener(modifyLtsVersion)
 /* @endif */
 
 // Variable tracking if the iniial originUrl is visited
