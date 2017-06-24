@@ -2,6 +2,7 @@ const gulp = require('gulp');
 const preprocess = require('gulp-preprocess');
 const gulpCopy = require('gulp-copy');
 const zip = require('gulp-zip');
+const clean = require('gulp-clean');
 
 const sourceFiles = ['manifest.json', 'icons/*', 'settings/options.html']
 
@@ -16,6 +17,10 @@ gulp.task('chrome', function() {
   gulp.src(['./settings/options.js'])
       .pipe(preprocess({context: {BROWSER_ENV: 'CHROME'}}))
       .pipe(gulp.dest('./chrome/settings/'))
+
+  gulp.src('chrome/*')
+      .pipe(zip('chrome.zip'))
+      .pipe(gulp.dest('dist'))
 });
 
 gulp.task('firefox', function() {
@@ -34,3 +39,8 @@ gulp.task('firefox', function() {
       .pipe(zip('firefox.zip'))
       .pipe(gulp.dest('dist'))
 });
+
+gulp.task('clean', function() {
+  gulp.src('dist', {read: false})
+      .pipe(clean())
+})
