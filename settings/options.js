@@ -15,19 +15,19 @@ function restoreOptions() {
     console.log(`Error from Stackgo: ${error}`);
   }
 
-  /* @if BROWSER_ENV='FIREFOX' */
+/* @if BROWSER_ENV='FIREFOX' */
   var getting = browser.storage.local.get("stackageResolver");
   getting.then(setCurrentChoice, onError);
-  /* endif */
+/* @endif */
 
-  /* @if BROWSER_ENV='CHROME' */
+/* @if BROWSER_ENV='CHROME' */
   chrome.storage.local.get("stackageResolver", function(version) {
     ltsVersion = version.stackageResolver;
     if (ltsVersion === undefined || ltsVersion === null)
       ltsVersion = "lts";
     document.querySelector("#stackageResolver").value = ltsVersion;
   });
-  /* endif */
+/* @endif */
 
 }
 
